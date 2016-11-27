@@ -13,8 +13,6 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import suwuttipoj.nantapak.takienfloatingmarket.fragments.MarketDetailFragment;
-
 
 public class MarketfloatingActivity extends AppCompatActivity {
 
@@ -38,9 +36,9 @@ public class MarketfloatingActivity extends AppCompatActivity {
 
             JSONArray jsonArray = new JSONArray(strJSON);
 
-            String[] nameStrings = new String[jsonArray.length()];
+            final String[] nameStrings = new String[jsonArray.length()];
             String[] detailStrings = new String[jsonArray.length()];
-            String[] iconStrings = new String[jsonArray.length()];
+            final String[] iconStrings = new String[jsonArray.length()];
 
             for (int i=0;i<jsonArray.length();i++) {
 
@@ -60,9 +58,12 @@ public class MarketfloatingActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    startActivity(new Intent(MarketfloatingActivity.this, MarketDetailFragment.class));
+                    Intent intent = new Intent(MarketfloatingActivity.this, TestActivity.class);
+                    intent.putExtra("Image", iconStrings[i]);
+                    intent.putExtra("Name", nameStrings[i]);
+                    startActivity(intent);
 
-                }
+                }   // onItemClick
             });
 
         } catch (Exception e) {
