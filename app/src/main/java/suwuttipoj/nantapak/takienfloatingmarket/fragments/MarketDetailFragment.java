@@ -46,8 +46,12 @@ public class MarketDetailFragment extends Fragment {
         tvDetail = (TextView) view.findViewById(R.id.tvDetails);
 
         // update view
-        tvTitle.setText(Shop.marketMenu[position]);
-        tvDetail.setText(Shop.marketDetail[position]);
+//        tvTitle.setText(Shop.marketMenu[position]);
+//        tvDetail.setText(Shop.marketDetail[position]);
+
+        tvTitle.setText("title Master");
+        tvDetail.setText("detail Master");
+
     }
 
     // Activity is calling this to update view on Fragment
@@ -55,4 +59,4 @@ public class MarketDetailFragment extends Fragment {
         tvTitle.setText(Shop.marketMenu[position]);
         tvDetail.setText(Shop.marketDetail[position]);
     }
-}
+}   // Main Class

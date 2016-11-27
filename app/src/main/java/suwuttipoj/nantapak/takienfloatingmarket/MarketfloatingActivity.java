@@ -1,14 +1,19 @@
 package suwuttipoj.nantapak.takienfloatingmarket;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import suwuttipoj.nantapak.takienfloatingmarket.fragments.MarketDetailFragment;
 
 
 public class MarketfloatingActivity extends AppCompatActivity {
@@ -50,6 +55,15 @@ public class MarketfloatingActivity extends AppCompatActivity {
             ShopAdapter shopAdapter = new ShopAdapter(MarketfloatingActivity.this,
                     iconStrings, nameStrings, detailStrings);
             listView.setAdapter(shopAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    startActivity(new Intent(MarketfloatingActivity.this, MarketDetailFragment.class));
+
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
