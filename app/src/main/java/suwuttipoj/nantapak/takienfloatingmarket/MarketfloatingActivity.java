@@ -2,10 +2,13 @@ package suwuttipoj.nantapak.takienfloatingmarket;
 
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -34,9 +37,9 @@ public class MarketfloatingActivity extends AppCompatActivity{
 
             JSONArray jsonArray = new JSONArray(strJSON);
 
-            String[] nameStrings = new String[jsonArray.length()];
+            final String[] nameStrings = new String[jsonArray.length()];
             String[] detailStrings = new String[jsonArray.length()];
-            String[] iconStrings = new String[jsonArray.length()];
+            final String[] iconStrings = new String[jsonArray.length()];
 
             for (int i=0;i<jsonArray.length();i++) {
 
@@ -51,7 +54,17 @@ public class MarketfloatingActivity extends AppCompatActivity{
                     MarketfloatingActivity.this, iconStrings, nameStrings);
             listView.setAdapter(shopAdapter);
 
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                    Intent intent = new Intent(MarketfloatingActivity.this, TestActivity.class);
+                    intent.putExtra("Image", iconStrings[position]);
+                    intent.putExtra("Name", nameStrings[position]);
+                    startActivity(intent);
+
+                }       //onItemClick
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
