@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 public class MarketfloatingActivity extends AppCompatActivity{
 
@@ -28,6 +31,26 @@ public class MarketfloatingActivity extends AppCompatActivity{
             String strJSON = synShop.get();
 
             Log.d("27novV1", "JSON ==>" + strJSON);
+
+            JSONArray jsonArray = new JSONArray(strJSON);
+
+            String[] nameStrings = new String[jsonArray.length()];
+            String[] detailStrings = new String[jsonArray.length()];
+            String[] iconStrings = new String[jsonArray.length()];
+
+            for (int i=0;i<jsonArray.length();i++) {
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                nameStrings[i] = jsonObject.getString("SHOP_NAME");
+                detailStrings[i] = jsonObject.getString("SHOP_DETAIL");
+                iconStrings[i] = jsonObject.getString("SHOP_IMAGE_FILE");
+            }   //for
+
+            ShopAdapter shopAdapter = new ShopAdapter(detailStrings,
+                    MarketfloatingActivity.this, iconStrings, nameStrings);
+            listView.setAdapter(shopAdapter);
+
 
 
         } catch (Exception e) {
