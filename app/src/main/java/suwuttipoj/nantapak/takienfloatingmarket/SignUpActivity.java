@@ -138,6 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
 
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -265,6 +266,7 @@ public class SignUpActivity extends AppCompatActivity {
         builder.show();
 
     }
+
     private void uploadToServer() {
 
         OkHttpClient okHttpClient = new OkHttpClient();
