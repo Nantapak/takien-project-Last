@@ -53,9 +53,6 @@
         <activity android:name=".InformationActivity" />
         <activity android:name=".ReligiousActivity" />
         <activity android:name=".MarketfloatingActivity" />
-        <activity android:name=".Tab1_marketfloating" />
-        <activity android:name=".Tab2_marketfloating" />
-        <activity android:name=".Tab3_marketfloating" />
         <activity android:name=".History_wtk_mk_Activity" />
         <activity android:name=".Tab1_htr_wtk" />
         <activity android:name=".Tab2_htr_wtk" />
@@ -63,7 +60,7 @@
             android:name=".HistoryActivity"
             android:label="@string/title_activity_history"
             android:theme="@style/TabHistory" />
-        <activity android:name=".TestActivity"></activity>
-    </application>
+        <activity android:name=".DetailShopActivity" />
+            </application>
 
 </manifest>

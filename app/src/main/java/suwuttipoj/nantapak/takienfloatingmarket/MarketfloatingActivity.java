@@ -5,9 +5,12 @@ package suwuttipoj.nantapak.takienfloatingmarket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -18,6 +21,7 @@ import org.json.JSONObject;
 public class MarketfloatingActivity extends AppCompatActivity{
 
     private ListView listView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class MarketfloatingActivity extends AppCompatActivity{
             JSONArray jsonArray = new JSONArray(strJSON);
 
             final String[] nameStrings = new String[jsonArray.length()];
-            String[] detailStrings = new String[jsonArray.length()];
+            final String[] detailStrings = new String[jsonArray.length()];
             final String[] iconStrings = new String[jsonArray.length()];
 
             for (int i=0;i<jsonArray.length();i++) {
@@ -58,9 +62,10 @@ public class MarketfloatingActivity extends AppCompatActivity{
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Intent intent = new Intent(MarketfloatingActivity.this, TestActivity.class);
+                    Intent intent = new Intent(MarketfloatingActivity.this, DetailShopActivity.class);
                     intent.putExtra("Image", iconStrings[position]);
                     intent.putExtra("Name", nameStrings[position]);
+                    intent.putExtra("Detail", detailStrings[position]);
                     startActivity(intent);
 
                 }       //onItemClick
@@ -72,8 +77,14 @@ public class MarketfloatingActivity extends AppCompatActivity{
 
 
 
+
     }   // Main Method
 
 
+
+
+
+
 }   // Main Class
+
 
