@@ -11,15 +11,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class HistoryActivity extends AppCompatActivity {
+import org.json.JSONArray;
+
+
+public class TabsMarketActivity extends AppCompatActivity {
+
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,7 +47,7 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history2);
+        setContentView(R.layout.activity_tabs_market);
 
 
 
@@ -49,10 +57,10 @@ public class HistoryActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container02);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs02);
         tabLayout.setupWithViewPager(mViewPager);
 
 
@@ -79,6 +87,8 @@ public class HistoryActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -105,7 +115,7 @@ public class HistoryActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
 
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                View rootView = inflater.inflate(R.layout.tab2_htr_wtk, container, false);
+                View rootView = inflater.inflate(R.layout.test01, container, false);
                 return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2)
@@ -120,8 +130,8 @@ public class HistoryActivity extends AppCompatActivity {
             }
             else
             {
-                View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                View rootView = inflater.inflate(R.layout.fragment_tabs_market, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label02);
                 textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
                 return rootView;
             }

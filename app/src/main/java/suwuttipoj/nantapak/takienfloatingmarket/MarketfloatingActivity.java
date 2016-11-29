@@ -25,7 +25,7 @@ public class MarketfloatingActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_marketfloating);
 
         listView = (ListView) findViewById(R.id.livShop);

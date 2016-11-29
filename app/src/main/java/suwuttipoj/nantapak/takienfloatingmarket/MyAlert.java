@@ -14,7 +14,7 @@ public class MyAlert {
                          String strMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
-        builder.setIcon(R.drawable.nobita48);
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(strTitle);
         builder.setMessage(strMessage);
         builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
