@@ -8,9 +8,16 @@
     android:background="@color/colorPrimaryDark">
 
 
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnTest" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/history_wat01"
         android:id="@+id/imageView6" />
+
 </LinearLayout>
