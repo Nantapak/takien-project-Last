@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 
 public class Tab1_htr_wtk extends Fragment {
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1_htr_wtk, container, false);
+
+
+
         return rootView;
     }
 }

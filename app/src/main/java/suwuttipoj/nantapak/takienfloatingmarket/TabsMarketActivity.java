@@ -1,47 +1,32 @@
 package suwuttipoj.nantapak.takienfloatingmarket;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class TabsMarketActivity extends AppCompatActivity {
 
 
-
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -108,19 +93,73 @@ public class TabsMarketActivity extends AppCompatActivity {
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
+        } //PlaceholderFragment
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                View rootView = inflater.inflate(R.layout.test01, container, false);
+                View rootView = inflater.inflate(R.layout.activity_marketfloating, container, false);
+                ListView listView = (ListView) rootView.findViewById(R.id.livShop);
+
+                try {
+
+                    SynShop synShop = new SynShop(getContext());
+                    synShop.execute();
+
+                    String strJSON = synShop.get();
+
+                    Log.d("27novV1", "JSON ==>" + strJSON);
+
+                    JSONArray jsonArray = new JSONArray(strJSON);
+
+                    final String[] nameStrings = new String[jsonArray.length()];
+                    final String[] detailStrings = new String[jsonArray.length()];
+                    final String[] iconStrings = new String[jsonArray.length()];
+
+                    for (int i=0;i<jsonArray.length();i++) {
+
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        nameStrings[i] = jsonObject.getString("SHOP_NAME");
+                        detailStrings[i] = jsonObject.getString("SHOP_DETAIL");
+                        iconStrings[i] = jsonObject.getString("SHOP_IMAGE_FILE");
+                    }   //for
+
+                    ShopAdapter shopAdapter = new ShopAdapter(detailStrings,
+                            getContext(), iconStrings, nameStrings);
+                    listView.setAdapter(shopAdapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            Intent intent = new Intent(getContext(), DetailShopActivity.class);
+                            intent.putExtra("Image", iconStrings[position]);
+                            intent.putExtra("Name", nameStrings[position]);
+                            intent.putExtra("Detail", detailStrings[position]);
+                            startActivity(intent);
+
+                        }       //onItemClick
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2)
             {
                 View rootView = inflater.inflate(R.layout.tab1_htr_wtk, container, false);
+                Button button = (Button) rootView.findViewById(R.id.btnTest);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("18decV1", "Click Button OK");
+                    }
+                });
                 return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3)
@@ -136,8 +175,8 @@ public class TabsMarketActivity extends AppCompatActivity {
                 return rootView;
             }
 
-        }
-    }
+        } // onCreateView
+    } //onPlateHolder
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -174,4 +213,4 @@ public class TabsMarketActivity extends AppCompatActivity {
             return null;
         }
     }
-}
+}   // Main Class
