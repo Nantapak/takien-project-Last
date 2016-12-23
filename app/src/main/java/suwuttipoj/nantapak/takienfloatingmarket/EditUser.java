@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +21,11 @@ public class EditUser extends AppCompatActivity {
     private String userIDString, PREFIX_ID, showPREFIX;
     private TextView prefixTextView;
     private Spinner prefixSpinner;
+    private EditText MEM_FIRSTNAMEditText;
+    private Button button;
+    private String updateMEM_FIRSTNAME, updatePREFIX_ID;
+    private boolean prefixABoolean = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +46,28 @@ public class EditUser extends AppCompatActivity {
         //Create Prefix Spinner
         createPrefixSpinner();
 
+        //Button Controller
+        buttonController();
+
 
     }   // Main method
+
+    private void buttonController() {
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                updateMEM_FIRSTNAME = MEM_FIRSTNAMEditText.getText().toString();
+
+                Log.d("23decV6", "updateMEM ==>" + updateMEM_FIRSTNAME);
+                Log.d("23decV6", "updatePREFIX ==>" + updatePREFIX_ID);
+
+
+            }   // onClick
+        });
+
+    }
 
     private void createPrefixSpinner() {
 
@@ -73,6 +100,18 @@ public class EditUser extends AppCompatActivity {
 
                     if (b[0]) {
                         prefixTextView.setText(prefixStrings[position]);
+
+                        Log.d("23decV6", "Work in onItem");
+
+                        if (prefixABoolean) {
+                            updatePREFIX_ID = Integer.toString(position + 1);
+                        } else {
+
+                            prefixABoolean = true;
+                        }
+
+                        Log.d("23decV6", "updatePRE ==>" + updatePREFIX_ID);
+
                     } else {
                         b[0] = true;
                     }
@@ -94,6 +133,9 @@ public class EditUser extends AppCompatActivity {
 
         prefixTextView = (TextView) findViewById(R.id.textView24);
         prefixSpinner = (Spinner) findViewById(R.id.spinner4);
+        MEM_FIRSTNAMEditText = (EditText) findViewById(R.id.editText5);
+        button = (Button) findViewById(R.id.button);
+
 
     }
 
@@ -111,9 +153,12 @@ public class EditUser extends AppCompatActivity {
             JSONObject jsonObject = jsonArray.getJSONObject(0);
 
             PREFIX_ID = jsonObject.getString("PREFIX_ID");
+            updatePREFIX_ID = PREFIX_ID;
             Log.d(tag1, "PREFIX_ID ==>" + PREFIX_ID);
             showPREFIX = findPREFIX(PREFIX_ID);
             prefixTextView.setText(showPREFIX);
+
+            MEM_FIRSTNAMEditText.setText(jsonObject.getString("MEM_FIRSTNAME"));
 
             mySynchronize.cancel(true);
 

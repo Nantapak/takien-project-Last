@@ -13,7 +13,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -34,5 +35,19 @@
                 android:id="@+id/spinner4"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText5" />
     </LinearLayout>
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
