@@ -36,7 +36,11 @@ public class TopShopAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return 10;  // only TopTen Shop
+        int i = iconStrings.length;
+        if (i >= 10) {
+            i = 10;
+        }
+        return i;  // only TopTen Shop
     }
 
     @Override

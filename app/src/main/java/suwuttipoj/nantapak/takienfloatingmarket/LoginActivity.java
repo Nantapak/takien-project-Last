@@ -20,8 +20,10 @@ public class LoginActivity extends AppCompatActivity {
 
     //Explicit
     private EditText userEditText, passwordEditText;
-    private String userString, passwordString;
+    private String userString, passwordString, truePasswordString, user_idString;
     private static final String urlJSON = "http://swiftcodingthai.com/ton/get_data.php";
+    private boolean aBoolean = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,109 +49,55 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
-            SynMember synMember = new SynMember(this);
-            synMember.execute(urlJSON);
-
-        }
-
-    }   //clickMyLogin
-
-    private class SynMember extends AsyncTask<String, Void, String> {
-
-        //Explicit
-        private Context context;
-        private boolean aBoolean = true;
-        private String[] columnStrings = new String[]{
-                "MEM_ID",
-                "USER_NAME",
-                "USER_PASSWORD",
-                "MEM_FIRSTNAME",
-                "MEM_LASTNAME",
-                "MEM_ADDRESS",
-                "MEM_TEL",
-                "MEM_EMAIL"};
-        private String[] loginStrings;
-
-        public SynMember(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
+            //No Space
             try {
 
-                OkHttpClient okHttpClient = new OkHttpClient();
-                Request.Builder builder = new Request.Builder();
-                Request request = builder.url(strings[0]).build();
-                Response response = okHttpClient.newCall(request).execute();
-                return response.body().string();
-
-            } catch (Exception e) {
-                Log.d("2octV1", "e doInBack ==> " + e.toString());
-                return null;
-            }
-
-        }   // doInBack
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Log.d("2octV1", "JSON ==> " + s);
-
-            try {
+                SynUserPass synUserPass = new SynUserPass(LoginActivity.this);
+                synUserPass.execute();
+                String s = synUserPass.get();
+                Log.d("23decV2", "JSON ==>" + s);
 
                 JSONArray jsonArray = new JSONArray(s);
 
-                loginStrings = new String[columnStrings.length];
-
-                for (int i=0;i<jsonArray.length();i+=1) {
+                for (int i=0;i<jsonArray.length();i++) {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    if (userString.equals(jsonObject.getString(columnStrings[1]))) {
-
+                    if (userString.equals(jsonObject.getString("USER_NAME"))) {
                         aBoolean = false;
-                        for (int i1=0;i1 < columnStrings.length;i1+=1) {
+                        truePasswordString = jsonObject.getString("USER_PASSWORD");
+                        user_idString = jsonObject.getString("USER_ID");
+                    }   //if
+                } //for
 
-                            loginStrings[i1] = jsonObject.getString(columnStrings[i1]);
-                            Log.d("2octV2", "loginString(" + i1 + ") = " + loginStrings[i1]);
-
-                        }   // for
-
-                    }   // if
-                }   // for
-
-                //Check User
                 if (aBoolean) {
                     //User False
                     MyAlert myAlert = new MyAlert();
-                    myAlert.myDialog(context, "User ผิด",
-                            "ไม่มี " + userString + " ในฐานข้อมูล ของเรา");
-                } else if (!passwordString.equals(loginStrings[2])) {
-                    //Password False
-                    MyAlert myAlert = new MyAlert();
-                    myAlert.myDialog(context, "Password False",
-                            "กรุณาลองใหม่ Password ผิด");
-                } else {
+                    myAlert.myDialog(LoginActivity.this, "User False",
+                            "No this User in my Database");
+                } else if (passwordString.equals(truePasswordString)) {
                     //Password True
-                    Toast.makeText(context, "Welcome " + loginStrings[3] + " " + loginStrings[4],
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, EditUser.class);
+                    intent.putExtra("USER_ID", user_idString);
                     startActivity(intent);
                     finish();
 
+
+                } else {
+                    //Password False
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(LoginActivity.this, "Password False",
+                            "Please Try Again Password False");
                 }
 
-
             } catch (Exception e) {
-                Log.d("2octV1", "e onPost ==> " + e.toString());
-            }
+                Log.d("23decV2", "e Tread ==>" + e.toString());
 
-        }   // onPost
+            }   //try
 
-    }   // SynMember Class
+        }   //if
+
+    }   //clickMyLogin
+
 
 
 
