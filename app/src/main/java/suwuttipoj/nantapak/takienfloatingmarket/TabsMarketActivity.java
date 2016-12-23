@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -152,17 +151,25 @@ public class TabsMarketActivity extends AppCompatActivity {
                 return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2)
-            {
-                View rootView = inflater.inflate(R.layout.tab1_htr_wtk, container, false);
-                Button button = (Button) rootView.findViewById(R.id.btnTest);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d("18decV1", "Click Button OK");
-                    }
-                });
+            {   // Part 2
+                View rootView = inflater.inflate(R.layout.top_listview, container, false);
+
+                ListView listView = (ListView) rootView.findViewById(R.id.livTopShop);
+
+                try {
+
+                    SynScore synScore = new SynScore(getContext());
+                    synScore.execute();
+                    String s = synScore.get();
+                    Log.d("23decV1", "JSON ==> " + s);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }   // try
+
                 return rootView;
-            }
+
+            }   // end Part 2
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3)
             {
                 View rootView = inflater.inflate(R.layout.tab3_htr_mk, container, false);
