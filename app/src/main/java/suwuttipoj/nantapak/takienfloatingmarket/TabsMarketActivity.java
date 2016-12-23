@@ -163,6 +163,41 @@ public class TabsMarketActivity extends AppCompatActivity {
                     String s = synScore.get();
                     Log.d("23decV1", "JSON ==> " + s);
 
+                    JSONArray jsonArray = new JSONArray(s);
+                    final String[] nameStrings = new String[jsonArray.length()];
+                    final String[] detailStrings = new String[jsonArray.length()];
+                    final String[] scoreStrings = new String[jsonArray.length()];
+                    final String[] iconStrings = new String[jsonArray.length()];
+
+                    for (int i=0;i<jsonArray.length();i++) {
+
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        nameStrings[i] = jsonObject.getString("SHOP_NAME");
+                        detailStrings[i] = jsonObject.getString("SHOP_DETAIL");
+                        scoreStrings[i] = jsonObject.getString("Score");
+                        iconStrings[i] = jsonObject.getString("SHOP_IMAGE_FILE");
+
+                    }   // for
+
+                    //Create ListView
+                    TopShopAdapter topShopAdapter = new TopShopAdapter(getContext(),
+                            iconStrings, nameStrings, detailStrings, scoreStrings);
+                    listView.setAdapter(topShopAdapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            Intent intent = new Intent(getContext(), DetailShopActivity.class);
+                            intent.putExtra("Name", nameStrings[i]);
+                            intent.putExtra("Image", iconStrings[i]);
+                            intent.putExtra("Detail", detailStrings[i] + " Score = " + scoreStrings[i]);
+                            startActivity(intent);
+
+                        }   // onItemClick
+                    });
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }   // try
@@ -212,11 +247,11 @@ public class TabsMarketActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "ประวัติวัดตะเคียน";
+                    return "ร้านค้า";
                 case 1:
-                    return "ประวัติหลวงปู่แย้ม";
+                    return "ร้านค้ายอดนิยม";
                 case 2:
-                    return "ประวัติตลาดน้ำ";
+                    return "พื่นที่ร้านค้า";
             }
             return null;
         }
