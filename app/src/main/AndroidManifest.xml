@@ -34,8 +34,9 @@
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/TabHistory" />
-        <activity android:name=".LoginActivity"
-            android:theme="@style/TabHistory"/>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/TabHistory" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,25 +52,28 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/TabHistory"/>
+            android:theme="@style/TabHistory" />
         <activity android:name=".MainActivity" />
         <activity android:name=".WattakienActivity" />
         <activity android:name=".InformationActivity" />
         <activity android:name=".ReligiousActivity" />
-        <activity android:name=".MarketfloatingActivity"
-            android:theme="@style/TabHistory"/>
+        <activity
+            android:name=".MarketfloatingActivity"
+            android:theme="@style/TabHistory" />
         <activity android:name=".Tab1_htr_wtk" />
         <activity android:name=".Tab2_htr_wtk" />
         <activity
             android:name=".HistoryActivity"
             android:label="@string/title_activity_history"
             android:theme="@style/TabHistory" />
-        <activity android:name=".DetailShopActivity"
-            android:theme="@style/TabHistory"/>
+        <activity
+            android:name=".DetailShopActivity"
+            android:theme="@style/TabHistory" />
         <activity
             android:name=".TabsMarketActivity"
             android:label="@string/title_activity_tabs_market"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".EditUser"></activity>
     </application>
 
 </manifest>

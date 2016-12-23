@@ -6,12 +6,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class LoginActivity extends AppCompatActivity {
 
     //Explicit
     private EditText userEditText, passwordEditText;
-    private String userString, passwordString;
+    private String userString, passwordString, truePasswordString, user_idString;
     private static final String urlJSON = "http://swiftcodingthai.com/ton/get_data.php";
+    private boolean aBoolean = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,39 @@ public class LoginActivity extends AppCompatActivity {
                 synUserPass.execute();
                 String s = synUserPass.get();
                 Log.d("23decV2", "JSON ==> " + s);
+
+                JSONArray jsonArray = new JSONArray(s);
+
+                for (int i=0;i<jsonArray.length();i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (userString.equals(jsonObject.getString("USER_NAME"))) {
+                        aBoolean = false;
+                        truePasswordString = jsonObject.getString("USER_PASSWORD");
+                        user_idString = jsonObject.getString("USER_ID");
+                    }   // if
+                }   // for
+
+                if (aBoolean) {
+                    //User False
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(LoginActivity.this, "User False",
+                            "No this User in my Database");
+                } else if (passwordString.equals(truePasswordString)) {
+                    //Password True
+                    Intent intent = new Intent(LoginActivity.this, EditUser.class);
+                    intent.putExtra("USER_ID", user_idString);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    //Password False
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(LoginActivity.this, "Password False",
+                            "Please Try Again Password False");
+                }
+
+
 
             } catch (Exception e) {
                 Log.d("23devV2", "e Thread ==> " + e.toString());
