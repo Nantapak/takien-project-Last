@@ -154,7 +154,21 @@ public class TabsMarketActivity extends AppCompatActivity {
             {   // Part 2
                 View rootView = inflater.inflate(R.layout.top_listview, container, false);
 
+                ListView listView = (ListView) rootView.findViewById(R.id.livTopShop);
+
+                try {
+
+                    SynScore synScore = new SynScore(getContext());
+                    synScore.execute();
+                    String s = synScore.get();
+                    Log.d("23decV1", "JSON ==> " + s);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }   // try
+
                 return rootView;
+
             }   // end Part 2
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3)
             {
