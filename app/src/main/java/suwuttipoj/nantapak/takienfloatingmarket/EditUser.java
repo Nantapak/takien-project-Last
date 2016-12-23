@@ -3,6 +3,8 @@ package suwuttipoj.nantapak.takienfloatingmarket;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,9 +52,10 @@ public class EditUser extends AppCompatActivity {
             mySynAll.execute(urlJSON);
             String s = mySynAll.get();
             Log.d(tag2, "JSON ==>" + s);
+            final boolean[] b = {false};
 
             JSONArray jsonArray = new JSONArray(s);
-            String[] prefixStrings = new String[jsonArray.length()];
+            final String[] prefixStrings = new String[jsonArray.length()];
             for (int i=0;i<jsonArray.length();i++) {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -64,6 +67,22 @@ public class EditUser extends AppCompatActivity {
                     android.R.layout.simple_list_item_1, prefixStrings);
             prefixSpinner.setAdapter(stringArrayAdapter);
 
+            prefixSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    if (b[0]) {
+                        prefixTextView.setText(prefixStrings[position]);
+                    } else {
+                        b[0] = true;
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
         } catch (Exception e) {
             Log.d(tag2, "e createSpinner ==>" + e.toString());
