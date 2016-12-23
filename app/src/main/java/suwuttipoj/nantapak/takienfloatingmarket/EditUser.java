@@ -3,6 +3,8 @@ package suwuttipoj.nantapak.takienfloatingmarket;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -52,9 +54,10 @@ public class EditUser extends AppCompatActivity {
             mySynAll.execute(urlJSON);
             String s = mySynAll.get();
             Log.d(tag2, "JSON ==> " + s);
+            final boolean[] b = {false};
 
             JSONArray jsonArray = new JSONArray(s);
-            String[] prefixStrings = new String[jsonArray.length()];
+            final String[] prefixStrings = new String[jsonArray.length()];
             for (int i=0;i<jsonArray.length();i++) {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -65,6 +68,24 @@ public class EditUser extends AppCompatActivity {
             ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(EditUser.this,
                     android.R.layout.simple_list_item_1, prefixStrings);
             prefixSpinner.setAdapter(stringArrayAdapter);
+
+            prefixSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Log.d(tag2, "onItemSelect doing");
+                    if (b[0]) {
+                        prefixTextView.setText(prefixStrings[i]);
+                    } else {
+                        b[0] = true;
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
 
         } catch (Exception e) {
@@ -122,6 +143,7 @@ public class EditUser extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(s);
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             result = jsonObject.getString("PREFIX_NAME");
+            Log.d(tag1, "resutl ==> " + result);
 
 
         } catch (Exception e) {
